@@ -1,0 +1,40 @@
+
+# Entorno virtual
+.venv/
+venv/
+
+# Variables de entorno y credenciales
+.env
+.env.*
+!.env.example
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Base de datos local
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos multimedia subidos por usuarios
+media/
+
+# Archivos estáticos generados
+staticfiles/
+
+# Configuración del editor
+.vscode/
+.idea/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de pruebas
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log

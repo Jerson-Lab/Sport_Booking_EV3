@@ -86,6 +86,10 @@ class Cancha(models.Model):
         auto_now_add=True,
     )
 
+    actualizado_en = models.DateTimeField(
+        auto_now=True,
+    )
+
     class Meta:
         ordering = ['nombre']
         verbose_name = 'cancha'
@@ -96,6 +100,6 @@ class Cancha(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'detalle_cancha', 
+            'cancha_detalle', 
             kwargs={'codigo': self.codigo}
         )

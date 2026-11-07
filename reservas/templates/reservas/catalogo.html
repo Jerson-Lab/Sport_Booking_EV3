@@ -1,0 +1,130 @@
+{%extends "base.html"%}
+{% load humanize %}
+{% block contenido %}
+
+<div class="text-center mb-5">
+    <h1 class="fw-bold">Nuestras canchas deportivas</h1>
+    <p class="text-muted">Encuentra tu espacio ideal para practicar tu deporte favorito</p>
+</div>
+
+<form method="get" class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <input type="text" name="q" class="form-control" placeholder="Buscar cancha."
+            value="{{ busqueda }}">
+    </div>
+    <div class="col-md-3">
+        <select name="disciplina" class="form-select">
+
+            <option value="">Todos las disciplinas</option>
+            {% for disciplina in disciplinas %}
+                <option value="{{ disciplina.slug }}" 
+                    {% if disciplina_seleccionada == disciplina.slug%}
+                    selected
+                    {% endif %}>
+                    {{ disciplina.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="orden" class="form-select">
+            <option value="precio"
+                {% if orden == "precio" %}selected{% endif %}>
+                Precio
+            </option>
+
+            <option value="precio_menor" 
+                {% if orden == "precio_menor" %}selected{% endif %}>
+                Menor precio
+            </option>
+            
+            <option value="precio_mayor"
+                {% if orden == "precio_mayor" %}selected{% endif %}>
+                Mayor precio
+            </option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100">Buscar</button>
+    </div>
+</form>
+
+<div class="row g-4">
+    {% for cancha in pagina %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+
+            {% if cancha.imagen %}
+                <img src="{{ cancha.imagen.url }}" class="card-img-top" alt="{{ cancha.nombre }}"
+                    style="height: 200px; object-fit: cover;">
+            {% else %}
+                <div class="bg-secondary-subtle d-flex justify-content-center align-items-center"
+                    style="height: 200px;">
+                    <span class="text-secondary">Sin imagen</span>
+                </div>
+            {% endif %}
+
+            <div class="card-body">
+
+                <h5 class="card-title">{{ cancha.nombre}}</h5>
+
+                <p class = "text-muted">
+                    {{ cancha.disciplina.nombre }} - 
+                </p>
+                <p>
+                    {{ cancha.descripcion|truncatewords:12 }}
+                </p>
+
+                <h5 class="text-primary">
+                    ${{ cancha.tarifa_hora|intcomma }} / hora
+                </h5>
+
+                <p>
+                    Estado:
+                    <strong>
+                        {{ cancha.get_estado_display}}
+                    </strong>
+                </p>
+
+                <a href="{{ cancha.get_absolute_url }}" class="btn btn-outline-primary w-100">
+                    Ver detalles
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning">
+                No se encontraron canchas.
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="d-flex justify-content-center align-items-center gap-3 mt-5">
+
+    {% if pagina.has_previous %}
+        <a class="btn btn-outline-primary"
+            href="?q={{busqueda|urlencode}}&disciplina={{disciplina_seleccionada|urlencode}}&orden={{orden}}&page={{pagina.previous_page_number}}">
+            Anterior
+        </a>
+    {% endif %}
+    <span>
+        Pagina {{pagina.number}}
+        de {{pagina.paginator.num_pages}}
+    </span>
+
+    {% if pagina.has_next %}
+
+        <a class="btn btn-outline-primary"
+            href="?q={{ busqueda|urlencode }}&disciplina={{ disciplina_seleccionada|urlencode }}&orden={{ orden }}&page={{ pagina.next_page_number }}">
+            Siguiente
+        </a>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+

@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / ".env", override=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -26,7 +26,8 @@ if not SECRET_KEY:
     raise RunTimeError("No se a encontrado la variable de entorno DJANGO_SECRET_KEY. Por favor, asegúrese de que está definida en el archivo .env.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', "False").lower() == 'True'
+DEBUG = os.getenv("DJANGO_DEBUG", "False").strip().lower() == "true"
+
 
 ALLOWED_HOSTS = [
     host.strip()

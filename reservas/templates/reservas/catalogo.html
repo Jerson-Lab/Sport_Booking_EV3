@@ -51,6 +51,17 @@
     </div>
 </form>
 
+{% if user.is_staff %}
+
+<div class="d-flex justify-content-end mb-4">
+    <a href="{% url 'cancha_crear' %}"
+       class="btn btn-success">
+        + Agregar nueva cancha
+    </a>
+</div>
+
+{% endif %}
+
 <div class="row g-4">
     {% for cancha in pagina %}
     <div class="col-md-6 col-lg-4">

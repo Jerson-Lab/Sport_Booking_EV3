@@ -40,4 +40,23 @@
             </a>
     </div>
 </div>
+
+{% if user.is_staff %}
+
+<div class="mt-4 d-flex gap-2 flex-wrap">
+
+    <a href="{% url 'cancha_editar' cancha.codigo %}"
+       class="btn btn-warning">
+        Editar cancha
+    </a>
+
+    <a href="{% url 'cancha_desactivar' cancha.codigo %}"
+       class="btn btn-danger">
+        Desactivar cancha
+    </a>
+
+</div>
+
+{% endif %}
+
 {% endblock %}

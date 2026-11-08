@@ -23,7 +23,7 @@ load_dotenv(BASE_DIR / ".env", override=True)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 if not SECRET_KEY:
-    raise RunTimeError("No se a encontrado la variable de entorno DJANGO_SECRET_KEY. Por favor, asegúrese de que está definida en el archivo .env.")
+    raise RuntimeError("No se a encontrado la variable de entorno DJANGO_SECRET_KEY. Por favor, asegúrese de que está definida en el archivo .env.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "False").strip().lower() == "true"

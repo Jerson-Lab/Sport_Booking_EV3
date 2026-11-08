@@ -6,7 +6,7 @@ admin.site.site_header = "Panel de control - SportBooking"
 admin.site.site_title = "SportBooking Admin"
 admin.site.index_title = "Gestion de recursos y servicios deportivos"
 
-@admin.register
+@admin.register (Disciplina)
 class DisciplinaAdmin(admin.ModelAdmin):
     list_display =(
         'nombre',

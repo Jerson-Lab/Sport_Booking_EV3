@@ -349,7 +349,7 @@ def modificar_seleccion(request, codigo):
             request,
             "La cancha no esta en su selección."
         )
-        return redirect/"ver_seleccion"
+        return redirect("ver_seleccion")
 
     if cancha.estado != Cancha.Estado.DISPONIBLE:
         messages.error(

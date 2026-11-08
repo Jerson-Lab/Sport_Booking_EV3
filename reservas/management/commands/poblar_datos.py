@@ -45,6 +45,9 @@ class Command(BaseCommand):
             ("tenis-centro", "Cancha de tenis centro", "tenis", 15000, 4),
             ("padel-sur", "Cancha de padel sur", "padel", 18000, 4),
             ("voleibol-sur", "Cancha de voleibol sur", "voleibol", 22000, 12),
+            ("tenis-sur", "Cancha de tenis sur", "tenis", 16000, 4),
+            ("padel-norte", "Cancha de pádel norte", "padel", 20000, 4),
+
         ]
 
         for codigo, nombre, slug, tarifa, capacidad in canchas:

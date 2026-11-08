@@ -1,0 +1,174 @@
+
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block contenido %}
+
+<h1 class="fw-bold mb-4">
+    Mi selección de canchas
+</h1>
+
+<p class="text-muted">
+    Revisa las canchas que seleccionaste
+    y el costo estimado.
+</p>
+
+{% if filas %}
+
+<div class="table-responsive">
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-primary">
+            <tr>
+                <th>Cancha</th>
+                <th>Horas</th>
+                <th>Personas</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for fila in filas %}
+
+            <tr>
+                <td>{{ fila.cancha.nombre }}</td>
+
+                <td>{{ fila.horas }}</td>
+
+                <td>{{ fila.personas }}</td>
+
+                <td>
+                    ${{ fila.subtotal|intcomma }}
+                </td>
+                
+                <td>
+
+                    <form method="post"
+                        action="{% url 'seleccion_modificar' fila.cancha.codigo %}">
+
+                        {% csrf_token %}
+
+                        <label class="form-label">Horas</label>
+
+                        <input type="number"
+                            name="horas"
+                            min="1"
+                            max="8"
+                            value="{{ fila.horas }}"
+                            class="form-control mb-2"
+                            required>
+
+                        <label class="form-label">Personas</label>
+
+                        <input type="number"
+                            name="personas"
+                            min="1"
+                            max="{{ fila.cancha.capacidad }}"
+                            value="{{ fila.personas }}"
+                            class="form-control mb-2"
+                            required>
+
+                        <button type="submit"
+                                class="btn btn-warning btn-sm">
+                            Actualizar
+                        </button>
+
+                    </form>
+
+                    <form method="post"
+                        action="{% url 'seleccion_quitar' fila.cancha.codigo %}"
+                        class="mt-2">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="btn btn-danger btn-sm">
+                            Quitar cancha
+                        </button>
+                    </form>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="card shadow-sm mt-4">
+
+    <div class="card-body">
+
+        <h4>Resumen de costos</h4>
+
+        <hr>
+
+        <p>
+            Subtotal neto:
+            <strong>
+                ${{ subtotal_general|intcomma }}
+            </strong>
+        </p>
+
+        <p>
+            IVA (19%):
+            <strong>
+                ${{ iva|intcomma }}
+            </strong>
+        </p>
+
+        <h4 class="text-primary">
+            Total: ${{ total|intcomma }}
+        </h4>
+
+    </div>
+
+</div>
+
+<form method="post"
+      action="{% url 'finalizar_seleccion' %}"
+      class="mt-4">
+
+    {% csrf_token %}
+
+    <button type="submit"
+            class="btn btn-success">
+        Finalizar solicitud
+    </button>
+
+</form>
+
+
+<form method="post"
+      action="{% url 'seleccion_vaciar' %}"
+      class="mt-4">
+
+    {% csrf_token %}
+
+    <button type="submit"
+            class="btn btn-outline-danger"
+            onclick="return confirm('¿Deseas vaciar toda la selección?');">
+        Vaciar selección
+    </button>
+
+</form>
+{% else %}
+
+<div class="alert alert-info">
+    Todavía no has seleccionado ninguna cancha.
+</div>
+
+{% endif %}
+
+
+<a href="{% url 'catalogo' %}"
+   class="btn btn-primary mt-4">
+    Seguir viendo canchas
+</a>
+
+{% endblock %}

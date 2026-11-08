@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block contenido %}
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-success text-white">
+        <h2 class="mb-0">
+            Comprobante de solicitud simulada
+        </h2>
+    </div>
+
+    <div class="card-body">
+
+        <p>
+            Fecha: {{ comprobante.fecha }}
+        </p>
+
+        <div class="alert alert-info">
+            Este comprobante corresponde a una simulación.
+            No confirma una reserva real.
+        </div>
+
+        <table class="table table-bordered">
+
+            <thead>
+                <tr>
+                    <th>Cancha</th>
+                    <th>Horas</th>
+                    <th>Personas</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in comprobante.detalle %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.horas }}</td>
+                    <td>{{ item.personas }}</td>
+                    <td>${{ item.subtotal|intcomma }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        <hr>
+
+        <p>
+            Subtotal neto:
+            ${{ comprobante.subtotal|intcomma }}
+        </p>
+
+        <p>
+            IVA (19%):
+            ${{ comprobante.iva|intcomma }}
+        </p>
+
+        <h3 class="text-success">
+            Total:
+            ${{ comprobante.total|intcomma }}
+        </h3>
+
+        <a href="{% url 'catalogo' %}"
+           class="btn btn-primary mt-3">
+            Volver al catálogo
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

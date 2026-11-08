@@ -59,4 +59,73 @@
 
 {% endif %}
 
+{% if cancha.estado == "disponible" %}
+
+<div class="card shadow-sm mt-4">
+
+    <div class="card-body">
+
+        <h4>Preparar reserva</h4>
+
+        <p class="text-muted">
+            Selecciona las horas y personas.
+        </p>
+
+        <form method="post"
+              action="{% url 'seleccion_agregar' cancha.codigo %}">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="horas"
+                       class="form-label">
+                    Cantidad de horas
+                </label>
+
+                <input type="number"
+                       id="horas"
+                       name="horas"
+                       min="1"
+                       max="8"
+                       value="1"
+                       class="form-control"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="personas"
+                       class="form-label">
+                    Cantidad de personas
+                </label>
+
+                <input type="number"
+                       id="personas"
+                       name="personas"
+                       min="1"
+                       max="{{ cancha.capacidad }}"
+                       value="1"
+                       class="form-control"
+                       required>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-success">
+                Agregar a mi selección
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% else %}
+
+<div class="alert alert-warning mt-4">
+    Esta cancha no está disponible
+    para una nueva selección.
+</div>
+
+{% endif %}
+
+
 {% endblock %}

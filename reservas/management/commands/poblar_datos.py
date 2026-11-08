@@ -8,6 +8,9 @@ from django.core.management.base import BaseCommand
 
 from reservas.models import Disciplina, Cancha
 
+from django.conf import settings
+from django.core.files import File
+
 class Command(BaseCommand):
     help ="Carga datos iniciales para SportBooking"
 
@@ -49,9 +52,24 @@ class Command(BaseCommand):
             ("padel-norte", "Cancha de pádel norte", "padel", 20000, 4),
 
         ]
+        
+
+
+        imagenes = {
+            "futbol-norte": "futbol1.jpg",
+            "futbol-sur": "Futbol2.jpg",
+            "padel-norte": "padel1.jpg",
+            "padel-sur": "padel2.jpg",
+            "tenis-centro": "Tenis1.jpg",
+            "tenis-sur": "tenis2.jpg",
+            "basquetbol-norte": "basket.jpg",
+            "voleibol-sur": "Voley.jpg",
+        }
 
         for codigo, nombre, slug, tarifa, capacidad in canchas:
+
             disciplina = Disciplina.objects.get(slug=slug)
+
             cancha, creada = Cancha.objects.get_or_create(
                 codigo=codigo,
                 defaults={
@@ -64,6 +82,38 @@ class Command(BaseCommand):
                     "activa": True,
                 }
             )
+
+            nombre_imagen = imagenes.get(codigo)
+
+            if nombre_imagen:
+                ruta = (
+                    settings.BASE_DIR
+                    / "reservas"
+                    / "demo_images"
+                    / nombre_imagen
+                )
+
+                if not ruta.is_file():
+                    self.stdout.write(
+                        self.style.WARNING(
+                            f"No se encontró la imagen: {ruta}"
+                        )
+                    )
+
+                elif (
+                    not cancha.imagen
+                    or not cancha.imagen.storage.exists(
+                        cancha.imagen.name
+                    )
+                ):
+                    with ruta.open("rb") as foto:
+                        cancha.imagen.save(
+                            nombre_imagen,
+                            File(foto),
+                            save=True
+                        )
+
+            
             if creada:
                 self.stdout.write(
                     f"Cancha creada: {nombre}"

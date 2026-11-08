@@ -4,7 +4,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.urls import reverse
 
-
+from django.conf import settings
 class Disciplina(models.Model):
     nombre = models.CharField(
         max_length=80,
@@ -103,3 +103,40 @@ class Cancha(models.Model):
             'cancha_detalle', 
             kwargs={'codigo': self.codigo}
         )
+
+class Perfil(models.Model):
+
+    class Rol(models.TextChoices):
+        CLIENTE = "cliente", "Cliente"
+        ADMIN = "admin", "Administrador"
+
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="perfil"
+    )
+
+    rut = models.CharField(
+        max_length=12,
+        unique=True,
+        blank=True,
+        null=True
+    )
+
+    telefono = models.CharField(
+        max_length=20,
+        blank=True
+    )
+
+    rol = models.CharField(
+        max_length=15,
+        choices=Rol.choices,
+        default=Rol.CLIENTE
+    )
+
+    class Meta:
+        verbose_name = "Perfil de usuario"
+        verbose_name_plural = "Perfiles de usuarios"
+
+    def __str__(self):
+        return f"Perfil de {self.usuario.username}"

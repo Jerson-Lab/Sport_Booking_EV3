@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from.models import Disciplina, Cancha
+from.models import Disciplina, Cancha, Perfil
 
 admin.site.site_header = "Panel de control - SportBooking"
 admin.site.site_title = "SportBooking Admin"
@@ -101,3 +101,27 @@ class CanchaAdmin(admin.ModelAdmin):
     ordering = ('nombre',)
 
     list_per_page = 10
+
+@admin.register(Perfil)
+class PerfilAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "usuario",
+        "rut",
+        "telefono",
+        "rol",
+    )
+
+    list_filter = (
+        "rol",
+    )
+
+    search_fields = (
+        "usuario__username",
+        "rut",
+        "telefono",
+    )
+
+    ordering = (
+        "usuario__username",
+    )

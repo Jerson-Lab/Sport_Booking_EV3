@@ -1,0 +1,86 @@
+
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6 col-lg-5">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">
+                    Iniciar sesión
+                </h3>
+            </div>
+
+            <div class="card-body">
+
+                <p class="text-muted">
+                    Ingresa a tu cuenta de SportBooking.
+                </p>
+
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                {% endif %}
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <input type="hidden"
+                           name="next"
+                           value="{{ next }}">
+
+                    <div class="mb-3">
+
+                        <label for="username"
+                               class="form-label">
+                            Nombre de usuario
+                        </label>
+
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               class="form-control"
+                               value="{{ form.username.value|default_if_none:'' }}"
+                               required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="password"
+                               class="form-label">
+                            Contraseña
+                        </label>
+
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+                        Iniciar sesión
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

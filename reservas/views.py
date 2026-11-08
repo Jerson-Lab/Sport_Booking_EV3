@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
-from .models import Cancha, Disciplina
+from .models import Cancha, Disciplina, Perfil
 
 from django.contrib import messages
 
@@ -15,10 +15,17 @@ from django.contrib.auth.decorators import(
 from django.shortcuts import redirect
 
 from .forms import CanchaForm
+from .forms import RegistroForm
 
 from decimal import Decimal, ROUND_HALF_UP
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+
+
+from django.contrib.auth import login
+from django.db import transaction
+
+
 
 def catalogo(request):
 
@@ -547,4 +554,44 @@ def ver_comprobante(request):
         request,
         "reservas/comprobante.html",
         {"comprobante": comprobante}
+    )
+
+def registrar_usuario(request):
+
+    # Evitar registrar otra cuenta con una sesión abierta
+    if request.user.is_authenticated:
+        return redirect("catalogo")
+
+    if request.method == "POST":
+        formulario = RegistroForm(request.POST)
+
+        if formulario.is_valid():
+
+            with transaction.atomic():
+
+                usuario = formulario.save()
+
+                Perfil.objects.create(
+                    usuario=usuario,
+                    rut=formulario.cleaned_data["rut"],
+                    telefono=formulario.cleaned_data["telefono"],
+                    rol=Perfil.Rol.CLIENTE
+                )
+
+            login(request, usuario)
+
+            messages.success(
+                request,
+                "Tu cuenta fue creada correctamente."
+            )
+
+            return redirect("catalogo")
+
+    else:
+        formulario = RegistroForm()
+
+    return render(
+        request,
+        "reservas/registro.html",
+        {"formulario": formulario}
     )

@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+from django.contrib.auth.views import LoginView, LogoutView
+
+
 urlpatterns = [
     path("", views.catalogo, 
          name="catalogo"),
@@ -60,5 +63,26 @@ urlpatterns = [
         name="ver_comprobante"
     ),
 
+    path(
+        "cerrar-sesion/",
+        LogoutView.as_view(next_page="catalogo"),
+        name="cerrar_sesion"
+    ),
+
+    
+    path(
+        "iniciar-sesion/",
+        LoginView.as_view(
+            template_name="reservas/iniciar_sesion.html",
+            next_page="catalogo"
+        ),
+        name="iniciar_sesion"
+    ),
+    
+    path(
+        "registro/",
+        views.registrar_usuario,
+        name="registro"
+    ),
 
 ]

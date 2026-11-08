@@ -2,10 +2,21 @@
 {% load humanize %}
 {% block contenido %}
 
-<div class="text-center mb-5">
-    <h1 class="fw-bold">Nuestras canchas deportivas</h1>
-    <p class="text-muted">Encuentra tu espacio ideal para practicar tu deporte favorito</p>
-</div>
+
+<section class="hero-sportbooking text-center p-4 p-md-5 mb-4">
+
+    <h1 class="fw-bold mb-3">
+        Encuentra tu próxima cancha
+    </h1>
+
+    <p class="lead mb-0">
+        Explora nuestros espacios deportivos,
+        compara tarifas y prepara tu reserva
+        de forma rápida y sencilla.
+    </p>
+
+</section>
+
 
 <form method="get" class="row g-3 mb-4">
 
@@ -65,7 +76,7 @@
 <div class="row g-4">
     {% for cancha in pagina %}
     <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm tarjeta-cancha">
 
             {% if cancha.imagen %}
                 <img src="{{ cancha.imagen.url }}" class="card-img-top" alt="{{ cancha.nombre }}"

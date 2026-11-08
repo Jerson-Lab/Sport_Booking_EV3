@@ -4,7 +4,7 @@
 
 {% block contenido %}
 
-<div class="card shadow-sm">
+<div class="card shadow-sm panel-sportbooking">
 
     <div class="card-header bg-success text-white">
         <h2 class="mb-0">
@@ -23,30 +23,32 @@
             No confirma una reserva real.
         </div>
 
-        <table class="table table-bordered">
+        <div class="table-responsive">
 
-            <thead>
-                <tr>
-                    <th>Cancha</th>
-                    <th>Horas</th>
-                    <th>Personas</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
+            <table class="table table-bordered align-midle">
 
-            <tbody>
-                {% for item in comprobante.detalle %}
-                <tr>
-                    <td>{{ item.nombre }}</td>
-                    <td>{{ item.horas }}</td>
-                    <td>{{ item.personas }}</td>
-                    <td>${{ item.subtotal|intcomma }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+                <thead>
+                    <tr>
+                        <th>Cancha</th>
+                        <th>Horas</th>
+                        <th>Personas</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
 
-        </table>
+                <tbody>
+                    {% for item in comprobante.detalle %}
+                    <tr>
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.horas }}</td>
+                        <td>{{ item.personas }}</td>
+                        <td>${{ item.subtotal|intcomma }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
 
+            </table>
+        </div>
         <hr>
 
         <p>
@@ -64,10 +66,22 @@
             ${{ comprobante.total|intcomma }}
         </h3>
 
-        <a href="{% url 'catalogo' %}"
-           class="btn btn-primary mt-3">
-            Volver al catálogo
-        </a>
+
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-4 no-imprimir">
+
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    onclick="window.print()">
+                Imprimir comprobante
+            </button>
+
+            <a href="{% url 'catalogo' %}"
+            class="btn btn-primary">
+                Volver al catálogo
+            </a>
+
+        </div>
+
 
     </div>
 </div>

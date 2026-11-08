@@ -6,7 +6,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
 
-        <div class="card shadow-sm">
+        <div class="card shadow-sm panel-sportbooking">
             <div class="card-header bg-primary text-white">
                 <h3 class="mb-0">{{ titulo }}</h3>
             </div>
@@ -15,6 +15,7 @@
 
                 <form method="post"
                       enctype="multipart/form-data"
+                      class="formulario-sportbooking"
                       novalidate>
                       
                     {% csrf_token %}
@@ -39,7 +40,7 @@
                             {% endif %}
 
                             {% for error in campo.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="invalid-feedback d-block">
                                     {{ error }}
                                 </div>
                             {% endfor %}

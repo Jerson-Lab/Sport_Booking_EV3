@@ -8,7 +8,7 @@
     <div class="col-md-6">
 
         {% if cancha.imagen %}
-            <img src="{{cancha.imagen.url}}" alt={{"cancha.nombre"}} class="img-fluid rounded shadow-sm">
+            <img src="{{cancha.imagen.url}}" alt={{"cancha.nombre"}} class="img-fluid rounded shadow-sm detalle-imagen">
         {% else %}
             <div class="bg-secondary-subtle rounded d-flex justify-content-center
                         align-items-center"
@@ -32,7 +32,33 @@
 
             <p>Capacidad:{{cancha.capacidad}} personas</p>
 
-            <p>Estado: <strong{{cancha.get_estado_display}}></p>
+            
+            <div class="mb-3">
+
+                <strong>Estado de la cancha:</strong>
+
+                {% if cancha.estado == "disponible" %}
+
+                    <span class="badge text-bg-success">
+                        Disponible
+                    </span>
+
+                {% elif cancha.estado == "mantencion" %}
+
+                    <span class="badge text-bg-warning">
+                        En mantención
+                    </span>
+
+                {% else %}
+
+                    <span class="badge text-bg-danger">
+                        Reservada
+                    </span>
+
+                {% endif %}
+
+            </div>
+
 
             <a href="{% url 'catalogo' %}"
                 class="btn btn-secondary">

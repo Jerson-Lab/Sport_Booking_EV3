@@ -1,0 +1,232 @@
+
+/* Estilos generales de SportBooking */
+
+:root {
+    --color-principal: #123f70;
+    --color-secundario: #1769aa;
+    --color-fondo: #f4f7fb;
+}
+
+body {
+    background-color: var(--color-fondo);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+}
+
+/* Menú principal */
+
+.navbar-sportbooking {
+    background: linear-gradient(
+        90deg,
+        var(--color-principal),
+        var(--color-secundario)
+    );
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar .nav-link:hover {
+    color: #ffffff;
+}
+
+/* Contenido principal */
+
+.contenido-principal {
+    min-height: 70vh;
+}
+
+/* Presentación del catálogo */
+
+.hero-sportbooking {
+    background: linear-gradient(
+        120deg,
+        #123f70,
+        #2879bc
+    );
+    color: white;
+    border-radius: 18px;
+}
+
+/* Tarjetas de canchas */
+
+.tarjeta-cancha {
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.tarjeta-cancha:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.tarjeta-cancha .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.tarjeta-cancha .card-body {
+    padding: 1.5rem;
+}
+
+/* Botones */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Formularios */
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2879bc;
+    box-shadow: 0 0 0 0.2rem rgba(40, 121, 188, 0.15);
+}
+
+/* Pie de página */
+
+.footer-sportbooking {
+    background-color: #102c4a;
+    color: white;
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 767.98px) {
+
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    .hero-sportbooking {
+        padding: 1.5rem;
+    }
+
+    .tarjeta-cancha .card-body {
+        padding: 1rem;
+    }
+
+    .contenido-principal {
+        min-height: 60vh;
+    }
+}
+
+/* Página de detalles de las canchas */
+
+.detalle-imagen {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.detalle-imagen-vacia {
+    min-height: 300px;
+    background-color: #e9ecef;
+}
+
+@media (max-width: 767.98px) {
+    .detalle-imagen {
+        height: 230px;
+    }
+}
+
+/* Tarjetas y formularios */
+
+.panel-sportbooking {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.panel-sportbooking .card-header {
+    padding: 1rem 1.5rem;
+}
+
+.panel-sportbooking .card-body {
+    padding: 1.75rem;
+}
+
+.formulario-sportbooking .form-label {
+    color: #25364a;
+    font-weight: 600;
+}
+
+.formulario-sportbooking .form-control,
+.formulario-sportbooking .form-select {
+    padding: 0.7rem 0.9rem;
+}
+
+@media (max-width: 767.98px) {
+    .panel-sportbooking .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Tabla de selección */
+
+.acciones-seleccion {
+    min-width: 190px;
+}
+
+.acciones-seleccion .form-control {
+    min-width: 100px;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+/* Resumen económico */
+
+.resumen-reserva {
+    max-width: 520px;
+    margin-left: auto;
+}
+
+.resumen-reserva h4 {
+    font-weight: 700;
+}
+
+/* Presentación del comprobante al imprimir */
+
+@media print {
+
+    .navbar,
+    .footer-sportbooking,
+    .no-imprimir {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+    }
+
+    .contenido-principal {
+        min-height: auto !important;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #dddddd !important;
+    }
+
+    .table-responsive {
+        overflow: visible;
+    }
+}
